@@ -65,6 +65,11 @@ class DataPreparer:
 
         return training_data
 
+    def sentence_as_array(self, sentence):
+        encoded_sentence = self.encoder.encode_sentence(sentence)
+        padded_sentence = self._padding_sentence(encoded_sentence)
+        return padded_sentence.reshape(-1, 1)
+
     def _padding_sentences(
         self, encoded_sentences: list[tuple[np.ndarray, np.ndarray]]
     ) -> np.ndarray:
@@ -85,6 +90,12 @@ class DataPreparer:
 
     def _int_to_lang_mapping(self) -> dict[int, str]:
         return {index: language for index, language in enumerate(self.languages)}
+
+    def _padding_sentence(self, encoded_sentence):
+        padded_sentence = np.zeros((1, self.max_length_sentence, self.vocabulary_size))
+        length = encoded_sentence.shape[0]
+        padded_sentence[0, :length, :] = encoded_sentence
+        return padded_sentence
 
     @staticmethod
     def lang_one_hot(j, size):
