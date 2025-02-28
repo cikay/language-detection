@@ -1,6 +1,6 @@
 ## Neural Network Language Detector
 
-This project implements a neural network model for language detection across multiple languages. The system is trained on a comprehensive dataset containing 60,000 sentences spanning 10 different languages.
+A language detection model using neural networks to identify 10 different languages from text input. Built as a learning project with a dataset of 60,000 sentences, this implementation demonstrates the fundamentals of text classification using character-level features.
 
 To run the code follow the steps below
 
