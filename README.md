@@ -1,6 +1,10 @@
+## Neural Network Language Detector
+
+This project implements a neural network model for language detection across multiple languages. The system is trained on a comprehensive dataset containing 60,000 sentences spanning 10 different languages.
+
 To run the code follow the steps below
 
-Create and activate shell by pipenv package manager
+Create and activate virtual environment using pipenv
 ```
 pipenv shell 
 ```
@@ -16,8 +20,7 @@ Open Python shell
 python
 ```
 
-Paste the following code to shell and it will run. It will print out the test prediction rate like `Epoch 0: 6789 / 12000` for each epoch
-and lastly for given Kurdish Kurmaji sentence it will print out `Kurdish Kurmanji`
+Run the following code to train the model and test a sample sentence. It will print out the test prediction rate like `Epoch 0: 6789 / 12000` for each epoch and lastly for given Kurdish Kurmaji sentence it will print out `Kurdish Kurmanji`. Note that it will takes couples of time to complete
 
 ```py
 from data_loader import load_data
@@ -36,7 +39,7 @@ print(lang)
 
 ```
 
-After completion you can test any sentence just by
+To test additional sentences
 
 ```py
 sentence = "the sentence you want"
