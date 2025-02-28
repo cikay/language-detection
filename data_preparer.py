@@ -53,10 +53,9 @@ class DataPreparer:
     def preprocess_data(self) -> list[tuple[np.ndarray, np.ndarray]]:
         """Encodes sentences into padded one-hot character vectors"""
         encoded_sentences = []
-        num_languages = len(self.languages)
         for sentence, language in self.sentences:
             encoded_lang = self.lang_to_int[language]
-            lang_array = self.lang_one_hot(encoded_lang, num_languages)
+            lang_array = self.lang_one_hot(encoded_lang, self.languages_count)
             encoded_sentence = self.encoder.encode_sentence(sentence)
             encoded_sentences.append((encoded_sentence, lang_array))
 
