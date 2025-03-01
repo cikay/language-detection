@@ -97,9 +97,9 @@ class Network:
 
         for layer in range(2, self.num_layers):
             weighted_input = layers_weighted_input[-layer]
-            sp = sigmoid_prime(weighted_input)
 
-            delta = np.dot(self.weights[-layer + 1].transpose(), delta) * sp
+            output_error = np.dot(self.weights[-layer + 1].transpose(), delta)
+            delta = output_error * sigmoid_prime(weighted_input)
 
             nabla_biases[-layer] = delta
             nabla_weights[-layer] = np.dot(
