@@ -20,7 +20,7 @@ Open Python shell
 python
 ```
 
-Run the following code to train the model and test a sample sentence. It will print out the test prediction rate like `Epoch 0: 6789 / 12000` for each epoch and lastly for given Kurdish Kurmaji sentence it will print out `Kurdish Kurmanji`. Note that it will takes couples of time to complete
+Run the following code to train the model and test a sample sentence. It will print out the test prediction rate like `Epoch 0: 6789 / 12000` for each epoch and lastly for given Kurdish Kurmaji sentence it will print out `Kurdish Kurmanji`. Note that it takes about 1 minute to print out first epoch results and 20 minutes for completion
 
 ```py
 from data_loader import load_data

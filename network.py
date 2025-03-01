@@ -18,8 +18,9 @@ class Network:
         # we use 1 as column size as biases are scalar values
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
 
-        # we use y as the next layer size and x as the current layer size
-        # Network([2, 3, 1])
+        # creates connects starts from first layer through hidden layers to output layer
+        # When layers number is n, n - 1 sets of weights connecting them.
+        # Start from first to second until last-to-second to last
         self.weights = [np.random.randn(y, x) for x, y in zip(sizes[:-1], sizes[1:])]
 
     def forward(self, input: np.ndarray) -> np.ndarray:
@@ -95,15 +96,26 @@ class Network:
         nabla_biases[-1] = delta
         nabla_weights[-1] = np.dot(delta, layers_activation[-2].transpose())
 
+        # Iterate backwards from second to last layer towards the first hidden layer.
+        # First layer in not included since it is input no biases and weights to adjust
         for layer in range(2, self.num_layers):
-            weighted_input = layers_weighted_input[-layer]
+            current_layer_index = -layer
+            next_layer_index = -layer + 1
+            previous_layer_index = -layer - 1
 
-            output_error = np.dot(self.weights[-layer + 1].transpose(), delta)
+            weighted_input = layers_weighted_input[current_layer_index]
+
+            # weights between current and next layer
+            current_to_next_layer_weights = self.weights[next_layer_index]
+            next_to_current_layer_weights = current_to_next_layer_weights.transpose()
+
+            output_error = np.dot(next_to_current_layer_weights, delta)
+            # delta is the error signal from the next layer
             delta = output_error * sigmoid_prime(weighted_input)
 
-            nabla_biases[-layer] = delta
-            nabla_weights[-layer] = np.dot(
-                delta, layers_activation[-layer - 1].transpose()
+            nabla_biases[current_layer_index] = delta
+            nabla_weights[current_layer_index] = np.dot(
+                delta, layers_activation[previous_layer_index].transpose()
             )
 
         return nabla_biases, nabla_weights
