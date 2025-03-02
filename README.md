@@ -1,6 +1,6 @@
 ## Neural Network Language Detector
 
-A language detection model using neural networks to identify 10 different languages from text input. Built as a learning project with a dataset of 60,000 sentences, this implementation demonstrates the fundamentals of neural network and text classification.
+A language detection model using neural networks to identify 10 different languages from text input. Built as a learning project with a dataset of 60,000 sentences, thanks to Mozilla Common Voice. This implementation demonstrates the fundamentals of neural network and text classification.
 
 To run the code follow the steps below
 
