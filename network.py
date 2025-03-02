@@ -14,7 +14,8 @@ class Network:
     def __init__(self, sizes: list[int]):
         self.num_layers = len(sizes)
         self.sizes = sizes
-        # we starts from 1. index to skip the input layer
+
+        # Each item represents a layer but first layer as it is input and has no biases
         # we use 1 as column size as biases are scalar values
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
 
@@ -88,7 +89,7 @@ class Network:
         nabla_biases = [np.zeros(b.shape) for b in self.biases]
         nabla_weights = [np.zeros(w.shape) for w in self.weights]
 
-        layers_activation, layers_weighted_input = self.collect_layers_values(input)
+        layers_activation, layers_weighted_input = self.compute_activations_and_weighted_inputs(input)
 
         output_error = self.cost_derivative(layers_activation[-1], desired_output)
         delta = output_error * sigmoid_prime(layers_weighted_input[-1])
@@ -158,7 +159,12 @@ class Network:
 
         return sum(int(x == y) for x, y in test_results)
 
-    def collect_layers_values(self, input: np.ndarray) -> tuple[list[np.ndarray], list[np.ndarray]]:
+    def compute_activations_and_weighted_inputs(self, input: np.ndarray) -> tuple[list[np.ndarray], list[np.ndarray]]:
+        """
+        Based on input, compute the current activations and weighted inputs for each layer during the forward pass.
+        These intermediate values will be used to determine the error of our biases and weights for this input.
+        """
+
         activation = input
         layers_activation = [input]
         layers_weighted_input = []
