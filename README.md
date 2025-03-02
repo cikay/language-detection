@@ -35,7 +35,7 @@ lang_detector = LanguageDetector(sentences, languages, encoder)
 sentence = "Ez ê di vê gotarê da qala ên ku ez guhdar û temaşe dikim bikim."
 lang = lang_detector.detect(sentence)
 
-print(lang)
+print(lang) # Should print "Kurdish Kurmanji"
 
 ```
 
