@@ -66,7 +66,7 @@ class Network:
         mini_batch: list[tuple[np.ndarray, np.ndarray]],
         learning_rate: float,
     ):
-        nabla_biases, nabla_weights = self._compute_nable(mini_batch)
+        nabla_biases, nabla_weights = self._compute_mini_batch_gradient(mini_batch)
 
         new_weights = []
         for weight, nabla_weight in zip(self.weights, nabla_weights):
@@ -85,6 +85,11 @@ class Network:
     def _backprop(
         self, input: np.ndarray, desired_output: np.ndarray
     ) -> tuple[list[np.ndarray], list[np.ndarray]]:
+        """
+        Compute the gradient of the cost function with respect to the network's
+        weights and biases for a single training example using the back propagation
+        algorithm.
+        """
 
         nabla_biases = [np.zeros(b.shape) for b in self.biases]
         nabla_weights = [np.zeros(w.shape) for w in self.weights]
@@ -98,7 +103,7 @@ class Network:
         nabla_weights[-1] = np.dot(delta, layers_activation[-2].transpose())
 
         # Iterate backwards from second to last layer towards the first hidden layer.
-        # First layer in not included since it is input no biases and weights to adjust
+        # First layer not included since it is input no biases and weights to adjust
         for layer in range(2, self.num_layers):
             current_layer_index = -layer
             next_layer_index = -layer + 1
@@ -121,9 +126,13 @@ class Network:
 
         return nabla_biases, nabla_weights
 
-    def _compute_nable(
+    def _compute_mini_batch_gradient(
         self, mini_batch: list[tuple[np.ndarray, np.ndarray]]
     ) -> tuple[list[np.ndarray], list[np.ndarray]]:
+        """
+        Computes the gradient of the cost function with respect to the network's
+        weights and biases for a given mini-batch.
+        """
 
         nabla_biases = [np.zeros(b.shape) for b in self.biases]
         nabla_weights = [np.zeros(w.shape) for w in self.weights]
