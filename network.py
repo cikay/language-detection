@@ -96,8 +96,8 @@ class Network:
 
         layers_activation, layers_weighted_input = self.compute_activations_and_weighted_inputs(input)
 
-        output_error = self.cost_derivative(layers_activation[-1], desired_output)
-        delta = output_error * sigmoid_prime(layers_weighted_input[-1])
+        output_cost_derivative = self.compute_cost_derivative(layers_activation[-1], desired_output)
+        delta = output_cost_derivative * sigmoid_prime(layers_weighted_input[-1])
 
         nabla_biases[-1] = delta
         nabla_weights[-1] = np.dot(delta, layers_activation[-2].transpose())
@@ -115,9 +115,9 @@ class Network:
             current_to_next_layer_weights = self.weights[next_layer_index]
             next_to_current_layer_weights = current_to_next_layer_weights.transpose()
 
-            output_error = np.dot(next_to_current_layer_weights, delta)
+            cost_derivative = np.dot(next_to_current_layer_weights, delta)
             # delta is the error signal from the next layer
-            delta = output_error * sigmoid_prime(weighted_input)
+            delta = cost_derivative * sigmoid_prime(weighted_input)
 
             nabla_biases[current_layer_index] = delta
             nabla_weights[current_layer_index] = np.dot(
@@ -186,7 +186,7 @@ class Network:
 
         return layers_activation, layers_weighted_input
 
-    def cost_derivative(
+    def compute_cost_derivative(
         self, output_activations: np.ndarray, desired_output: np.ndarray
     ) -> np.ndarray:
         return 2 * (output_activations - desired_output)
