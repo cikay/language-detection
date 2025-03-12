@@ -3,10 +3,12 @@ import random
 
 
 def sigmoid(weighted_input: np.ndarray) -> np.ndarray:
+    """Sigmoid (logistic) activation function. Outputs values between 0 and 1"""
     return 1.0 / (1.0 + np.exp(-weighted_input))
 
 
 def sigmoid_prime(weighted_input: np.ndarray) -> np.ndarray:
+    """Derivative of activation function respect to weighted input"""
     return sigmoid(weighted_input) * (1 - sigmoid(weighted_input))
 
 
@@ -97,6 +99,11 @@ class Network:
         layers_activation, layers_weighted_input = self.compute_activations_and_weighted_inputs(input)
 
         output_cost_derivative = self.compute_cost_derivative(layers_activation[-1], desired_output)
+        """
+        Delta represents the derivative of the cost function with respect to the weighted input
+        Therefore, we adjust the weights and biases by subtracting values proportional to delta,
+        as delta provides information about the direction in which the cost function decreases
+        """
         delta = output_cost_derivative * sigmoid_prime(layers_weighted_input[-1])
 
         nabla_biases[-1] = delta
@@ -116,7 +123,6 @@ class Network:
             next_to_current_layer_weights = current_to_next_layer_weights.transpose()
 
             cost_derivative = np.dot(next_to_current_layer_weights, delta)
-            # delta is the error signal from the next layer
             delta = cost_derivative * sigmoid_prime(weighted_input)
 
             nabla_biases[current_layer_index] = delta
