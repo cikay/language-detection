@@ -99,13 +99,10 @@ class Network:
         layers_activation, layers_weighted_input = self.compute_activations_and_weighted_inputs(input)
 
         output_cost_derivative = self.compute_cost_derivative(layers_activation[-1], desired_output)
-        """
-        Delta represents the derivative of the cost function with respect to the weighted input
-        Therefore, we adjust the weights and biases by subtracting values proportional to delta,
-        as delta provides information about the direction in which the cost function decreases
-        """
+        # Delta is the derivative of the cost function with respect to the weighted input
         delta = output_cost_derivative * sigmoid_prime(layers_weighted_input[-1])
 
+        # Nabla is the derivative of the cost function with respect to a bias or weight
         nabla_biases[-1] = delta
         nabla_weights[-1] = np.dot(delta, layers_activation[-2].transpose())
 
