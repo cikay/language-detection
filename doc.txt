@@ -1,0 +1,6 @@
+compute_activations_and_weighted_inputs:
+
+    These activations and weighted inputs are intermediate values.
+    In the first iteration, they are based on random biases and weights, representing a potentially inaccurate initial state.
+    They represent the network's current state for this specific input before the backpropagation step.
+    During backpropagation, we use these values to compute the gradient of the cost function with respect to the network's weights and biases. This gradient essentially tells us how much each weight and bias contributed to the error for this input. By using the gradients, we adjust the weights and biases to minimize the cost function.
