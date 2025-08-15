@@ -24,6 +24,8 @@ class Network:
         # creates connects starts from first layer through hidden layers to output layer
         # When layers number is n, n - 1 sets of weights connecting them.
         # Start from first to second until last-to-second to last
+        # if size 256 10, 10 = weights count = 256 * 10 + 10 * 10 = 2660
+        # self.weights = [(10, 256), (10, 10)] = 256 * 10 + 10 * 10 = 2660
         self.weights = [np.random.randn(y, x) for x, y in zip(sizes[:-1], sizes[1:])]
 
     def forward(self, input: np.ndarray) -> np.ndarray:
